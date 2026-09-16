@@ -584,3 +584,53 @@ root.render(<App />);
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ระบบจองโปรเจกเตอร์</title>
+</head>
+<body>
+  <h1>รายการข้อมูลการจอง</h1>
+  
+  <!-- แสดงสถานะการโหลด -->
+  <div id="loading">กำลังโหลดข้อมูล...</div>
+  
+  <!-- แสดงรายการข้อมูลที่ดึงมา -->
+  <ul id="data-list"></ul>
+
+  <script>
+    // Web App URL ของคุณ
+    const WEB_APP_URL = 'https://script.google.com/a/macros/msu.ac.th/s/AKfycbyuDxaNGnL96dS2g8gVnQLllKnayh7cRWkj2XvF46FnEqJzMNT2lqARi4OjlWuC5sss4A/exec';
+
+    // ฟังก์ชันสำหรับดึงข้อมูล (GET Request)
+    async function fetchData() {
+      try {
+        const response = await fetch(WEB_APP_URL);
+        const data = await response.json();
+        
+        // ซ่อนข้อความกำลังโหลด
+        document.getElementById('loading').style.display = 'none';
+
+        // แสดงผลข้อมูลบนหน้าเว็บ
+        const listElement = document.getElementById('data-list');
+        listElement.innerHTML = '';
+
+        data.forEach(item => {
+          const li = document.createElement('li');
+          // ปรับตามชื่อ Key/Column ของข้อมูลที่คุณส่งออกมาจาก Apps Script
+          li.textContent = JSON.stringify(item); 
+          listElement.appendChild(li);
+        });
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        document.getElementById('loading').textContent = 'เกิดข้อผิดพลาดในการโหลดข้อมูล';
+      }
+    }
+
+    // เรียกใช้งานฟังก์ชันเมื่อโหลดหน้าเว็บ
+    fetchData();
+  </script>
+</body>
+</html>
