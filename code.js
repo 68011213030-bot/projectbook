@@ -5,11 +5,13 @@ const SPREADSHEET_ID = '1jO_iOJnj2xW3TSP71xi3b4M0qSzy1dEsNwI2LjaeQj8';
 const ADMIN_PASSWORD = '1205101';
 
 function doGet(e) {
-  const html = HtmlService.createTemplateFromFile('index.html').evaluate();
-  html.setTitle('MSU Projector Booking');
-  html.addMetaTag('viewport', 'width=device-width, initial-scale=1');
-  html.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-  return html;
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  const sheet = ss.getSheetByName('ฐานข้อมูล');
+  const data = sheet.getDataRange().getValues();
+  
+  // แปลงข้อมูลในชีตส่งออกไปเป็น JSON ให้ Vercel ดึงไปใช้
+  return ContentService.createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 // ==========================================
