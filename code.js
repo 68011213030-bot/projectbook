@@ -5,7 +5,7 @@ const SPREADSHEET_ID = '1jO_iOJnj2xW3TSP71xi3b4M0qSzy1dEsNwI2LjaeQj8';
 const ADMIN_PASSWORD = '1205101';
 
 function doGet(e) {
-  const html = HtmlService.createTemplateFromFile('Index').evaluate();
+  const html = HtmlService.createTemplateFromFile('index.html').evaluate();
   html.setTitle('MSU Projector Booking');
   html.addMetaTag('viewport', 'width=device-width, initial-scale=1');
   html.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
